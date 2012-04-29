@@ -27,10 +27,10 @@ handle(Req, State) ->
     <title>erlmpc</title>
   </head>
   <body>
-    <div id=\"songname\">Not connected</span>
-    <input type=\"button\" id=\"prev\" value=\"Back\">
-    <input type=\"button\" id=\"toggle\" value=\"Toggle\">
-    <input type=\"button\" id=\"next\" value=\"Next\">
+    <div id=\"songname\">Not connected</div>
+    <input type=\"button\" id=\"prev\" value=\"Back\" />
+    <input type=\"button\" id=\"toggle\" value=\"Toggle\" />
+    <input type=\"button\" id=\"next\" value=\"Next\" />
   </body>
 </html>">>, Req),
     {ok, Req2, State}.
