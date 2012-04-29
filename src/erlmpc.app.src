@@ -1,0 +1,12 @@
+{application, erlmpc,
+ [
+  {description, "Erlang based web MPD client"},
+  {vsn, "1"},
+  {registered, []},
+  {applications, [
+                  kernel,
+                  stdlib
+                 ]},
+  {mod, { erlmpc_app, []}},
+  {env, []}
+ ]}.
