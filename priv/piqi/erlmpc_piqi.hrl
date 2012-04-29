@@ -8,11 +8,6 @@
     | pause
     | status
 ).
--type(erlmpc_state() :: 
-      play
-    | stop
-    | pause
-).
 -record(erlmpc_status, {
     volume :: integer(),
     repeat :: boolean(),
@@ -21,7 +16,7 @@
     consume :: boolean(),
     playlist :: integer(),
     playlistlength :: integer(),
-    state :: boolean(),
+    state :: erlmpc_state(),
     song :: integer(),
     songid :: integer(),
     time :: number(),
@@ -32,6 +27,11 @@
     updatings_db :: integer(),
     error :: binary()
 }).
+-type(erlmpc_state() :: 
+      play
+    | stop
+    | pause
+).
 
 -type(erlmpc_status() :: #erlmpc_status{}).
 

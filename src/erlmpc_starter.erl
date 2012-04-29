@@ -3,6 +3,7 @@
 
 start_link() ->
     application:start(cowboy),
+    application:start(piqi),
     Dispatch = [
         % {Host, list({Path, Handler, Opts})}
         {'_', [

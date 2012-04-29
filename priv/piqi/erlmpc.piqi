@@ -7,13 +7,6 @@
     .option [ .name status ]
 ]
 
-.variant [
-    .name state
-    .option [ .name play ]
-    .option [ .name stop ]
-    .option [ .name pause ]
-]
-
 .record [
     .name status
     .field [ .name volume .type int .optional ]
@@ -23,7 +16,7 @@
     .field [ .name consume .type bool .optional ]
     .field [ .name playlist .type int .optional ]
     .field [ .name playlistlength .type int .optional ]
-    .field [ .name state .optional ]
+    .field [ .name state .type state .optional ]
     .field [ .name song .type int .optional ]
     .field [ .name songid .type int .optional ]
     .field [ .name time .type float .optional ]
@@ -33,4 +26,11 @@
     .field [ .name audio .type binary .optional ]
     .field [ .name updatings-db .type int .optional ]
     .field [ .name error .type binary .optional ]
+]
+
+.enum [
+    .name state
+    .option [ .name play ]
+    .option [ .name stop ]
+    .option [ .name pause ]
 ]
