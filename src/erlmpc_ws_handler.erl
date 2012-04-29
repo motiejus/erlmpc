@@ -23,14 +23,16 @@ handle(Req, State) ->
 <!DOCTYPE html>
 <html>
   <head>
-    <meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">
+    <meta http-equiv='Content-Type' content='text/html; charset=utf-8'>
     <title>erlmpc</title>
+    <script type='text/javascript' src='/static/jquery-1.7.2.min.js'></script>
+    <script type='text/javascript' src='/static/erlmpc.main.js'></script>
   </head>
   <body>
-    <div id=\"songname\">Not connected</div>
-    <input type=\"button\" id=\"prev\" value=\"Back\" />
-    <input type=\"button\" id=\"toggle\" value=\"Toggle\" />
-    <input type=\"button\" id=\"next\" value=\"Next\" />
+    <div id='songname'>Not connected</div>
+    <input type='button' id='prev' value='Back' />
+    <input type='button' id='toggle' value='Toggle' />
+    <input type='button' id='next' value='Next' />
   </body>
 </html>">>, Req),
     {ok, Req2, State}.
