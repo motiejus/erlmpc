@@ -13,6 +13,7 @@
 -record(erlmpc_currentsong, {
     file :: string() | binary(),
     time :: integer(),
+    artist :: string() | binary(),
     title :: string() | binary(),
     album :: string() | binary(),
     track :: integer(),

@@ -38,6 +38,7 @@ get_currentsong(Conn) ->
     #erlmpc_currentsong{
         file = proplists:get_value(file, CurrentSong),
         time = proplists:get_value('Time', CurrentSong),
+        artist = proplists:get_value('Artist', CurrentSong),
         title = proplists:get_value('Title', CurrentSong),
         album = proplists:get_value('Album', CurrentSong),
         track = proplists:get_value('Track', CurrentSong),

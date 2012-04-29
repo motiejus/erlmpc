@@ -13,7 +13,8 @@
     .name currentsong
     .field [ .name file .type string .optional ]
     .field [ .name Time .type int ]
-    .field [ .name Title .type string .optional ]
+    .field [ .name Artist .type string ]
+    .field [ .name Title .type string ]
     .field [ .name Album .type string .optional ]
     .field [ .name Track .type int .optional ]
     .field [ .name Date .type string .optional ]

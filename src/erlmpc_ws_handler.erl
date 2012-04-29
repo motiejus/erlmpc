@@ -25,28 +25,9 @@ init({_Any, http}, Req, []) ->
 
 
 handle(Req, State) ->
-    {ok, Req2} = cowboy_http_req:reply(200,
-        [{'Content-Type', <<"text/html">>}],
-        <<"
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta http-equiv='Content-Type' content='text/html; charset=utf-8'>
-    <title>erlmpc</title>
-    <script type='text/javascript' src='/static/jquery-1.7.2.min.js'></script>
-    <script type='text/javascript' src='/static/erlmpc.main.js'></script>
-  </head>
-  <body>
-    <div id='songname'>Not connected</div>
-    <input type='button' id='prev' value='Back' />
-    <input type='button' id='toggle' value='Toggle' />
-    <input type='button' id='next' value='Next' />
-    <div id='setvol-slider'>
-      <label for='setvol-slider' />Volume: </label/>
-      <input type='range' name='setvol' min='0' max='100' value='0' />
-    </div>
-  </body>
-</html>">>, Req),
+    {ok, IndexHtml} = file:read_file([code:priv_dir(erlmpc), "/static/index.html"]),
+    Headers = [{'Content-Type', <<"text/html">>}],
+    {ok, Req2} = cowboy_http_req:reply(200, Headers, IndexHtml, Req),
     {ok, Req2, State}.
 
 websocket_init(_TransportName, Req, _Opts) ->
