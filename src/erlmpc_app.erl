@@ -10,7 +10,9 @@
 %% ===================================================================
 
 start(_StartType, _StartArgs) ->
+    application:start(cowboy),
     erlmpc_sup:start_link().
 
 stop(_State) ->
+    application:stop(cowboy),
     ok.

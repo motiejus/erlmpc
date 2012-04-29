@@ -1,14 +1,27 @@
 -module(erlmpc_ws_handler).
+
+-behaviour(cowboy_http_websocket_handler).
+-behaviour(cowboy_http_handler).
+
 -export([init/3]).
--export([handle/2]).
+-export([handle/2, terminate/2]).
 -export([websocket_init/3, websocket_handle/3,
         websocket_info/3, websocket_terminate/3]).
 
-init({tcp, http}, _Req, _Opts) ->
-    {upgrade, protocol, cowboy_http_websocket}.
+init({_Any, http}, Req, []) ->
+    case cowboy_http_req:header('Upgrade', Req) of
+        {undefined, Req2} -> {ok, Req2, undefined};
+        {<<"websocket">>, _Req2} -> {upgrade, protocol, cowboy_http_websocket};
+        {<<"WebSocket">>, _Req2} -> {upgrade, protocol, cowboy_http_websocket}
+    end.
+
 
 handle(Req, State) ->
-    {ok, Req2} = cowboy_http_req:reply(200, [], <<"Hello World!">>, Req),
+    {ok, Req2} = cowboy_http_req:reply(200,
+        [{'Content-Type', <<"text/html">>}],
+        <<"TBD: index.html or something">>,
+        Req
+    ),
     {ok, Req2, State}.
 
 websocket_init(_TransportName, Req, _Opts) ->
@@ -26,5 +39,7 @@ websocket_info({timeout, _Ref, Msg}, Req, State) ->
 websocket_info(_Info, Req, State) ->
     {ok, Req, State}.
 
+terminate(_Req, _State) ->
+    ok.
 websocket_terminate(_Reason, _Req, _State) ->
     ok.
