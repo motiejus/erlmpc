@@ -1,5 +1,20 @@
 ErlMPC = new Object();
 
+ErlMPC.init = function(x) {
+    if ("WebSocket" in window) {
+        // Some caching
+        ErlMPC.seek_btn = $("#seek");
+        wsUri = document.URL.replace(/^http:/, "ws:");
+        ErlMPC.ws = new WebSocket(wsUri);
+        ErlMPC.ws.onopen = ErlMPC.onopen;
+        ErlMPC.ws.onclose = ErlMPC.onclose;
+        ErlMPC.ws.onmessage = ErlMPC.onmessage;
+        ErlMPC.ws.onerror = ErlMPC.onerror;
+    } else {
+        alert("Your browser does not support websockets, sorry");
+        return false;
+    }
+};
 
 ErlMPC.update_screen = function(data) {
     $("#songname").html(data.currentsong.Artist + " - " + data.currentsong.Title);
@@ -42,23 +57,6 @@ ErlMPC.stop_freq = function() {
     if (ErlMPC.timeout_handle != undefined)
         clearTimeout(ErlMPC.timeout_handle);
     ErlMPC.timeout_handle = undefined;
-};
-
-
-ErlMPC.init = function(x) {
-    if ("WebSocket" in window) {
-        // Some caching
-        ErlMPC.seek_btn = $("#seek");
-        wsUri = document.URL.replace(/^http:/, "ws:");
-        ErlMPC.ws = new WebSocket(wsUri);
-        ErlMPC.ws.onopen = ErlMPC.onopen;
-        ErlMPC.ws.onclose = ErlMPC.onclose;
-        ErlMPC.ws.onmessage = ErlMPC.onmessage;
-        ErlMPC.ws.onerror = ErlMPC.onerror;
-    } else {
-        alert("Your browser does not support websockets, sorry");
-        return false;
-    }
 };
 
 $(function() {
