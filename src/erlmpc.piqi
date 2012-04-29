@@ -1,0 +1,15 @@
+.variant [
+
+    .name command
+
+    .option [
+        .name vol-abs
+        .type int
+    ]
+
+    .option [
+        .name vol-rel
+        .type int
+    ]
+
+]
