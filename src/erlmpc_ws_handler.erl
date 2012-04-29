@@ -29,6 +29,7 @@ handle(Req, State) ->
 
 websocket_init(_TransportName, Req, _Opts) ->
     {ok, Conn} = erlmpd:connect(),
+    gproc:reg({p, l, erlmpc_subscriber}),
     {ok, Req, #state{conn=Conn}}.
 
 websocket_handle({text, Msg}, Req, State=#state{conn=Conn}) ->

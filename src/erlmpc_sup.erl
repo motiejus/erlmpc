@@ -24,5 +24,8 @@ start_link() ->
 %% ===================================================================
 
 init([]) ->
-    {ok, { {one_for_one, 5, 10}, [?CHILD(erlmpc_starter, worker)]} }.
+    {ok, { {one_for_one, 5, 10}, [
+                ?CHILD(erlmpc_starter, worker),
+                ?CHILD(erlmpc_notifier, worker)
+            ]} }.
 
