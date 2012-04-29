@@ -2,6 +2,7 @@
 -export([start_link/0]).
 
 start_link() ->
+    application:start(cowboy),
     Dispatch = [
         % {Host, list({Path, Handler, Opts})}
         {'_', [
