@@ -38,7 +38,7 @@ websocket_handle({text, Msg}, Req, State=#state{conn=Conn}) ->
         noreply -> {ok, Req, State}
     end.
 
-websocket_info({events, Ev}, Req, State=#state{conn=Conn}) ->
+websocket_info({events, _Ev}, Req, State=#state{conn=Conn}) ->
     {reply, R} =  erlmpc_stateless_backend:proc(statuscurrentsong, Conn),
     {reply, {text, R}, Req, State};
 
