@@ -20,9 +20,12 @@ ErlMPC.update_screen = function(data) {
     $("#songname").html(data.currentsong.Artist + " - " + data.currentsong.Title);
     $("#toggle").attr("value", data.state == "play"? "Pause" : "Play" );
     $("#setvol").attr("value", data.volume);
-    $("#seek").attr({"max" : data.currentsong.Time, "value" : data.time });
+    $("#seek").attr({"max" : Math.round(data.currentsong.Time),
+            "value" : Math.round(data.time) });
     if (data.state == "play")
-        ErlMPC.run_freq();
+        ErlMPC.timeout_handle = setTimeout(ErlMPC.run_freq, ErlMPC.timeout);
+    else
+        ErlMPC.stop_freq();
 };
 
 ErlMPC.onopen = function(evt) {

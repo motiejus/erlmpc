@@ -6,6 +6,7 @@
 -include("priv/piqi/erlmpc_piqi.hrl").
 
 -export([proc/2, proc_bin/2]).
+-export([get_currentsong/1, get_status/1]).
 
 %% @doc process a request when action is known
 %% 1) Find out what it wants
@@ -41,13 +42,18 @@ get_status(Conn) ->
 
 get_currentsong(Conn) ->
     CurrentSong = erlmpd:currentsong(Conn),
+    % Track is sometimes int, sometimes string from MPD. Converting to string
+    Track = case proplists:get_value('Track', CurrentSong) of
+        T when is_integer(T) -> integer_to_list(T);
+        T -> T
+    end,
     #erlmpc_currentsong{
         file = proplists:get_value(file, CurrentSong),
         time = proplists:get_value('Time', CurrentSong),
         artist = proplists:get_value('Artist', CurrentSong),
         title = proplists:get_value('Title', CurrentSong),
         album = proplists:get_value('Album', CurrentSong),
-        track = proplists:get_value('Track', CurrentSong),
+        track = Track,
         genre = proplists:get_value('Genre', CurrentSong),
         pos = proplists:get_value('Pos', CurrentSong),
         id = proplists:get_value('Id', CurrentSong)

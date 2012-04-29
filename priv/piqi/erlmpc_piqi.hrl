@@ -16,7 +16,7 @@
     artist :: string() | binary(),
     title :: string() | binary(),
     album :: string() | binary(),
-    track :: integer(),
+    track :: string() | binary(),
     date :: string() | binary(),
     genre :: string() | binary(),
     pos :: integer(),

@@ -16,7 +16,8 @@
     .field [ .name Artist .type string ]
     .field [ .name Title .type string ]
     .field [ .name Album .type string .optional ]
-    .field [ .name Track .type int .optional ]
+    % Track is sometimes int ... so working around in app
+    .field [ .name Track .type string .optional ]
     .field [ .name Date .type string .optional ]
     .field [ .name Genre .type string .optional ]
     .field [ .name Pos .type int ]
