@@ -6,7 +6,8 @@ start_link() ->
     Dispatch = [
         % {Host, list({Path, Handler, Opts})}
         {'_', [
-                {[<<"static">>, '...'], erlmpc_static_handler, []},
+                {[<<"static">>, '...'], cowboy_http_static,
+                    [{directory, {priv_dir, erlmpc, [<<"static">>]}}]},
                 {'_', erlmpc_ws_handler, []}
             ]
         }
