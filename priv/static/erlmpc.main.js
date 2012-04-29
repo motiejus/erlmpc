@@ -2,7 +2,7 @@ var ErlMPC = ErlMPC || Object;
 
 ErlMPC.onopen = function(evt) {
     // Ask for current song, volume and status
-    ErlMPC.ws.send("{ \"get_status\": null }");
+    ErlMPC.ws.send("{ \"status\": null }");
 };
 
 ErlMPC.onclose = function(evt) {
