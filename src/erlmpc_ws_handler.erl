@@ -19,9 +19,20 @@ init({_Any, http}, Req, []) ->
 handle(Req, State) ->
     {ok, Req2} = cowboy_http_req:reply(200,
         [{'Content-Type', <<"text/html">>}],
-        <<"TBD: index.html or something">>,
-        Req
-    ),
+        <<"
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">
+    <title>erlmpc</title>
+  </head>
+  <body>
+    <div id=\"songname\">Not connected</span>
+    <input type=\"button\" id=\"prev\" value=\"Back\">
+    <input type=\"button\" id=\"toggle\" value=\"Toggle\">
+    <input type=\"button\" id=\"next\" value=\"Next\">
+  </body>
+</html>">>, Req),
     {ok, Req2, State}.
 
 websocket_init(_TransportName, Req, _Opts) ->
