@@ -2,8 +2,13 @@ ErlMPC = new Object();
 
 ErlMPC.init = function(x) {
     if ("WebSocket" in window) {
-        // Some caching
-        ErlMPC.seek_btn = $("#seek");
+        ErlMPC.cache = {
+            "seek" : $("#seek"),
+            "toggle" : $("#toggle"),
+            "setvol" : $("#setvol"),
+            "songname" : $("#songname")
+        },
+
         wsUri = document.URL.replace(/^http:/, "ws:");
         ErlMPC.ws = new WebSocket(wsUri);
         ErlMPC.ws.onopen = ErlMPC.onopen;
@@ -17,10 +22,10 @@ ErlMPC.init = function(x) {
 };
 
 ErlMPC.update_screen = function(data) {
-    $("#songname").html(data.currentsong.Artist + " - " + data.currentsong.Title);
-    $("#toggle").attr("value", data.state == "play"? "Pause" : "Play" );
-    $("#setvol").attr("value", data.volume);
-    $("#seek").attr({"max" : Math.round(data.currentsong.Time),
+    ErlMPC.cache.songname.html(data.currentsong.Artist + " - " + data.currentsong.Title);
+    ErlMPC.cache.toggle.attr("value", data.state == "play"? "Pause" : "Play" );
+    ErlMPC.cache.setvol.attr("value", data.volume);
+    ErlMPC.cache.seek.attr({"max" : Math.round(data.currentsong.Time),
             "value" : Math.round(data.time) });
     if (data.state == "play")
         ErlMPC.timeout_handle = setTimeout(ErlMPC.run_freq, ErlMPC.timeout);
@@ -52,8 +57,8 @@ ErlMPC.timeout = 1000;
 ErlMPC.timeout_handle = undefined;
 ErlMPC.run_freq = function() {
     ErlMPC.stop_freq();
-    ErlMPC.seek_btn.attr("value",
-            parseInt(ErlMPC.seek_btn.attr("value")) + ErlMPC.timeout/1000);
+    ErlMPC.cache.seek.attr("value",
+            parseInt(ErlMPC.cache.seek.attr("value")) + ErlMPC.timeout/1000);
     ErlMPC.timeout_handle = setTimeout(ErlMPC.run_freq, ErlMPC.timeout);
 };
 ErlMPC.stop_freq = function() {
