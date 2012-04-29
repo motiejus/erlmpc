@@ -8,7 +8,8 @@ ErlMPC.init = function(x) {
             "setvol" : $("#setvol"),
             "songname" : $("#songname"),
             "next" : $("#next"),
-            "prev" : $("#prev")
+            "prev" : $("#prev"),
+            "error" : $("#error")
         },
         ErlMPC.h = {},
 
@@ -42,6 +43,7 @@ ErlMPC.init = function(x) {
 };
 
 ErlMPC.update_screen = function(data) {
+    ErlMPC.cache.error.html(data['error'] ? data['error'] : "");
     ErlMPC.cache.songname.html(data.currentsong.Artist + " - " + data.currentsong.Title);
     var paused = data.state != "play";
     ErlMPC.cache.pause.attr("value", paused? "Play" : "Pause" ).data('paused', paused);
