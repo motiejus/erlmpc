@@ -22,9 +22,9 @@ init({_Any, http}, Req, []) ->
     end.
 
 handle(Req, State) ->
-    {ok, IndexHtml} = file:read_file([code:priv_dir(erlmpc), "/static/index.html"]),
+    {ok, Html} = file:read_file([code:priv_dir(erlmpc), "/static/index.html"]),
     Headers = [{'Content-Type', <<"text/html">>}],
-    {ok, Req2} = cowboy_http_req:reply(200, Headers, IndexHtml, Req),
+    {ok, Req2} = cowboy_http_req:reply(200, Headers, Html, Req),
     {ok, Req2, State}.
 
 websocket_init(_TransportName, Req, _Opts) ->
@@ -33,13 +33,16 @@ websocket_init(_TransportName, Req, _Opts) ->
     {ok, Req, #state{conn=Conn}}.
 
 websocket_handle({text, Msg}, Req, State=#state{conn=Conn}) ->
-    case erlmpc_stateless_backend:proc(Msg, Conn) of
+    case erlmpc_stateless_backend:proc_bin(Msg, Conn) of
         {reply, Reply} -> {reply, {text, Reply}, Req, State};
         noreply -> {ok, Req, State}
     end.
 
+websocket_info({events, Ev}, Req, State=#state{conn=Conn}) ->
+    {reply, R} =  erlmpc_stateless_backend:proc(statuscurrentsong, Conn),
+    {reply, {text, R}, Req, State};
+
 websocket_info(_Info, Req, State) ->
-    io:format("Something received: ~p~n", [_Info]),
     {ok, Req, State}.
 
 terminate(_Req, _State) -> ok.

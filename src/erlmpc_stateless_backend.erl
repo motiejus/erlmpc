@@ -5,16 +5,14 @@
 -module(erlmpc_stateless_backend).
 -include("priv/piqi/erlmpc_piqi.hrl").
 
--export([proc/2]).
+-export([proc/2, proc_bin/2]).
 
-%% @doc process a request from client:
-%% 1) Depiqi it (convert to native type)
-%% 2) Find out what it wants
-%% 3) Do the action
-%% 4) If necessary, give response
--spec proc/2 :: (binary(), erlmpd:conn()) -> {reply, binary()} | noreply.
-proc(Msg, Conn) ->
-    Req = erlmpc_piqi_ext:parse_request(Msg, 'json'),
+%% @doc process a request when action is known
+%% 1) Find out what it wants
+%% 2) Do the action
+%% 3) If necessary, give response
+-spec proc/2 :: (atom(), erlmpd:conn()) -> {reply, binary()} | noreply.
+proc(Req, Conn) ->
     case Req of
         currentsong ->
             R = get_currentsong(Conn),
@@ -27,6 +25,14 @@ proc(Msg, Conn) ->
             R = St#erlmpc_status{currentsong=get_currentsong(Conn)},
             {reply, erlmpc_piqi_ext:gen_status(R, 'json_pretty')}
     end.
+
+%% @doc process a request from client:
+%% 1) Depiqi it (convert to native type)
+%% 2) Pass to request processor
+-spec proc_bin/2 :: (binary(), erlmpd:conn()) -> {reply, binary()} | noreply.
+proc_bin(Msg, Conn) ->
+    Req = erlmpc_piqi_ext:parse_request(Msg, 'json'),
+    proc(Req, Conn).
 
 get_status(Conn) ->
     St = erlmpd:status(Conn),
