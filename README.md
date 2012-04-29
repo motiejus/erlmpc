@@ -1,13 +1,12 @@
 erlmpc
 ======
 
-Erlang web-based MPD client
+Erlang web-based MPD client.
 
-Uses these buzzwords:
+Major highlights (a.k.a. buzzwords):
 
-* PIQI. The most awesomest thing after Proper.
-* Websockets. Actions in browser are really visible immediatly.
-* Cowboy for wrapping it all up ;)
+* PIQI. The awesomest thing after Proper. Look at my separation of concerns :)
+* Websockets. Actions are really visible immediately in browser.
 
 How to use:
 
@@ -23,3 +22,4 @@ TODO:
 
     * Get rid of gproc (too many dependencies, too less used)
     * Blog about PIQI
+    * (Maybe) Add long polling fallback if websockets are unavailable
