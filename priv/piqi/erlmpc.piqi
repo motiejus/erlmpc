@@ -13,16 +13,16 @@
 .record [
     .name currentsong
     .field [ .name file .type string .optional ]
-    .field [ .name Time .type int ]
-    .field [ .name Artist .type string ]
-    .field [ .name Title .type string ]
+    .field [ .name Time .type int .optional ]
+    .field [ .name Artist .type string .optional ]
+    .field [ .name Title .type string .optional ]
     .field [ .name Album .type string .optional ]
     % Track is sometimes int ... so working around in app
     .field [ .name Track .type string .optional ]
     .field [ .name Date .type string .optional ]
     .field [ .name Genre .type string .optional ]
-    .field [ .name Pos .type int ]
-    .field [ .name Id .type int ]
+    .field [ .name Pos .type int .optional ]
+    .field [ .name Id .type int .optional ]
 ]
 
 .record [
@@ -35,8 +35,8 @@
     .field [ .name playlist .type int .optional ]
     .field [ .name playlistlength .type int .optional ]
     .field [ .name state .type state ]
-    .field [ .name song .type int ]
-    .field [ .name songid .type int ]
+    .field [ .name song .type int .optional ]
+    .field [ .name songid .type int .optional ]
     .field [ .name time .type float .optional ]
     .field [ .name elapsed .type string .optional ]
     .field [ .name bitrate .type int .optional ]
