@@ -1,15 +1,36 @@
 .variant [
+    .name request
+    .option [ .name setvol .type int ]
+    .option [ .name next ]
+    .option [ .name prev ]
+    .option [ .name pause ]
+    .option [ .name status ]
+]
 
-    .name command
+.variant [
+    .name state
+    .option [ .name play ]
+    .option [ .name stop ]
+    .option [ .name pause ]
+]
 
-    .option [
-        .name vol-abs
-        .type int
-    ]
-
-    .option [
-        .name vol-rel
-        .type int
-    ]
-
+.record [
+    .name status
+    .field [ .name volume .type int .optional ]
+    .field [ .name repeat .type bool .optional ]
+    .field [ .name random .type bool .optional ]
+    .field [ .name single .type bool .optional ]
+    .field [ .name consume .type bool .optional ]
+    .field [ .name playlist .type int .optional ]
+    .field [ .name playlistlength .type int .optional ]
+    .field [ .name state .optional ]
+    .field [ .name song .type int .optional ]
+    .field [ .name songid .type int .optional ]
+    .field [ .name time .type float .optional ]
+    .field [ .name elapsed .type binary .optional ]
+    .field [ .name bitrate .type int .optional ]
+    .field [ .name xfade .type int .optional ]
+    .field [ .name audio .type binary .optional ]
+    .field [ .name updatings-db .type int .optional ]
+    .field [ .name error .type binary .optional ]
 ]
