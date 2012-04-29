@@ -30,7 +30,8 @@ proc(Req, Conn) ->
             erlmpd:seekid(Conn, SongId, SeekSecs),
             noreply;
         {setvol, Vol} -> erlmpd:setvol(Conn, Vol), noreply;
-        {pause, Really} -> erlmpd:pause(Conn, Really), noreply;
+        {pause, true} -> erlmpd:pause(Conn, true), noreply;
+        {pause, false} -> erlmpd:play(Conn), noreply;
         prev -> erlmpd:previous(Conn), noreply;
         next -> erlmpd:next(Conn), noreply
     end.
