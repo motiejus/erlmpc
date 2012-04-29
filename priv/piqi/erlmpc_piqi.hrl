@@ -7,7 +7,20 @@
     | prev
     | pause
     | status
+    | currentsong
+    | statuscurrentsong
 ).
+-record(erlmpc_currentsong, {
+    file :: string() | binary(),
+    time :: integer(),
+    title :: string() | binary(),
+    album :: string() | binary(),
+    track :: integer(),
+    date :: string() | binary(),
+    genre :: string() | binary(),
+    pos :: integer(),
+    id :: integer()
+}).
 -record(erlmpc_status, {
     volume :: integer(),
     repeat :: boolean(),
@@ -20,12 +33,13 @@
     song :: integer(),
     songid :: integer(),
     time :: number(),
-    elapsed :: binary(),
+    elapsed :: string() | binary(),
     bitrate :: integer(),
     xfade :: integer(),
-    audio :: binary(),
+    audio :: string() | binary(),
     updatings_db :: integer(),
-    error :: binary()
+    error :: string() | binary(),
+    currentsong :: erlmpc_currentsong()
 }).
 -type(erlmpc_state() :: 
       play
@@ -33,6 +47,7 @@
     | pause
 ).
 
+-type(erlmpc_currentsong() :: #erlmpc_currentsong{}).
 -type(erlmpc_status() :: #erlmpc_status{}).
 
 

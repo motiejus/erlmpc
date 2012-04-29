@@ -5,27 +5,45 @@
     .option [ .name prev ]
     .option [ .name pause ]
     .option [ .name status ]
+    .option [ .name currentsong ]
+    .option [ .name statuscurrentsong ]
+]
+
+.record [
+    .name currentsong
+    .field [ .name file .type string .optional ]
+    .field [ .name Time .type int ]
+    .field [ .name Title .type string .optional ]
+    .field [ .name Album .type string .optional ]
+    .field [ .name Track .type int .optional ]
+    .field [ .name Date .type string .optional ]
+    .field [ .name Genre .type string .optional ]
+    .field [ .name Pos .type int ]
+    .field [ .name Id .type int ]
 ]
 
 .record [
     .name status
-    .field [ .name volume .type int .optional ]
-    .field [ .name repeat .type bool .optional ]
-    .field [ .name random .type bool .optional ]
-    .field [ .name single .type bool .optional ]
+    .field [ .name volume .type int ]
+    .field [ .name repeat .type bool ]
+    .field [ .name random .type bool ]
+    .field [ .name single .type bool ]
     .field [ .name consume .type bool .optional ]
     .field [ .name playlist .type int .optional ]
     .field [ .name playlistlength .type int .optional ]
-    .field [ .name state .type state .optional ]
-    .field [ .name song .type int .optional ]
-    .field [ .name songid .type int .optional ]
+    .field [ .name state .type state ]
+    .field [ .name song .type int ]
+    .field [ .name songid .type int ]
     .field [ .name time .type float .optional ]
-    .field [ .name elapsed .type binary .optional ]
+    .field [ .name elapsed .type string .optional ]
     .field [ .name bitrate .type int .optional ]
     .field [ .name xfade .type int .optional ]
-    .field [ .name audio .type binary .optional ]
+    .field [ .name audio .type string .optional ]
     .field [ .name updatings-db .type int .optional ]
-    .field [ .name error .type binary .optional ]
+    .field [ .name error .type string .optional ]
+
+    % Only if asked via statuscurrentsong.
+    .field [ .name currentsong .type currentsong .optional]
 ]
 
 .enum [
