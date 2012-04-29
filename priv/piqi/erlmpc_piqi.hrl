@@ -6,7 +6,7 @@
     | {seek, integer()}
     | next
     | prev
-    | pause
+    | {pause, boolean()}
     | status
     | currentsong
     | statuscurrentsong

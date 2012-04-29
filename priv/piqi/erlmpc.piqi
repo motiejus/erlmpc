@@ -4,7 +4,7 @@
     .option [ .name seek .type int ]
     .option [ .name next ]
     .option [ .name prev ]
-    .option [ .name pause ]
+    .option [ .name pause .type bool ]
     .option [ .name status ]
     .option [ .name currentsong ]
     .option [ .name statuscurrentsong ]

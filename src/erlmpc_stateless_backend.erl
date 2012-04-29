@@ -29,9 +29,10 @@ proc(Req, Conn) ->
             SongId = proplists:get_value(songid, erlmpd:status(Conn)),
             erlmpd:seekid(Conn, SongId, SeekSecs),
             noreply;
-        {setvol, Vol} ->
-            erlmpd:setvol(Conn, Vol),
-            noreply
+        {setvol, Vol} -> erlmpd:setvol(Conn, Vol), noreply;
+        {pause, Really} -> erlmpd:pause(Conn, Really), noreply;
+        prev -> erlmpd:previous(Conn), noreply;
+        next -> erlmpd:next(Conn), noreply
     end.
 
 %% @doc process a request from client:

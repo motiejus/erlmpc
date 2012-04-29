@@ -4,14 +4,16 @@ ErlMPC.init = function(x) {
     if ("WebSocket" in window) {
         ErlMPC.cache = {
             "seek" : $("#seek"),
-            "toggle" : $("#toggle"),
+            "pause" : $("#pause"),
             "setvol" : $("#setvol"),
-            "songname" : $("#songname")
+            "songname" : $("#songname"),
+            "next" : $("#next"),
+            "prev" : $("#prev")
         },
         ErlMPC.h = {},
 
-        wsUri = document.URL.replace(/^http:/, "ws:");
-        ErlMPC.ws = new WebSocket(wsUri);
+        ErlMPC.h.wsUri = document.URL.replace(/^http:/, "ws:");
+        ErlMPC.ws = new WebSocket(ErlMPC.h.wsUri);
         ErlMPC.ws.onopen = ErlMPC.onopen;
         ErlMPC.ws.onclose = ErlMPC.onclose;
         ErlMPC.ws.onmessage = ErlMPC.onmessage;
@@ -27,6 +29,12 @@ ErlMPC.init = function(x) {
         },
         ErlMPC.h.ChangeAfterSomeTime(ErlMPC.cache.seek, "seek");
         ErlMPC.h.ChangeAfterSomeTime(ErlMPC.cache.setvol, "setvol");
+        ErlMPC.cache.next.click(function() { ErlMPC.ws.send("{ \"next\": null }"); });
+        ErlMPC.cache.prev.click(function() { ErlMPC.ws.send("{ \"prev\": null }"); });
+        ErlMPC.cache.pause.click(function() {
+            var Val = { "pause" : !ErlMPC.cache.pause.data('paused') };
+            ErlMPC.ws.send(JSON.stringify(Val));
+        });
     } else {
         alert("Your browser does not support websockets, sorry");
         return false;
@@ -35,7 +43,8 @@ ErlMPC.init = function(x) {
 
 ErlMPC.update_screen = function(data) {
     ErlMPC.cache.songname.html(data.currentsong.Artist + " - " + data.currentsong.Title);
-    ErlMPC.cache.toggle.attr("value", data.state == "play"? "Pause" : "Play" );
+    var paused = data.state != "play";
+    ErlMPC.cache.pause.attr("value", paused? "Play" : "Pause" ).data('paused', paused);
     ErlMPC.cache.setvol.attr("value", data.volume);
     ErlMPC.cache.seek.attr({"max" : Math.round(data.currentsong.Time),
             "value" : Math.round(data.time) });
