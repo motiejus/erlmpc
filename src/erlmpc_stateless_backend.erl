@@ -24,7 +24,14 @@ proc(Req, Conn) ->
         statuscurrentsong -> % status and current song
             St = get_status(Conn),
             R = St#erlmpc_status{currentsong=get_currentsong(Conn)},
-            {reply, erlmpc_piqi_ext:gen_status(R, 'json_pretty')}
+            {reply, erlmpc_piqi_ext:gen_status(R, 'json_pretty')};
+        {seek, SeekSecs} ->
+            SongId = proplists:get_value(songid, erlmpd:status(Conn)),
+            erlmpd:seekid(Conn, SongId, SeekSecs),
+            noreply;
+        {setvol, Vol} ->
+            erlmpd:setvol(Conn, Vol),
+            noreply
     end.
 
 %% @doc process a request from client:

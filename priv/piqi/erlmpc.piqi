@@ -1,6 +1,7 @@
 .variant [
     .name request
     .option [ .name setvol .type int ]
+    .option [ .name seek .type int ]
     .option [ .name next ]
     .option [ .name prev ]
     .option [ .name pause ]

@@ -3,6 +3,7 @@
 
 -type(erlmpc_request() :: 
       {setvol, integer()}
+    | {seek, integer()}
     | next
     | prev
     | pause

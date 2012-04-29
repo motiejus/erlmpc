@@ -8,6 +8,7 @@ ErlMPC.init = function(x) {
             "setvol" : $("#setvol"),
             "songname" : $("#songname")
         },
+        ErlMPC.h = {},
 
         wsUri = document.URL.replace(/^http:/, "ws:");
         ErlMPC.ws = new WebSocket(wsUri);
@@ -15,6 +16,17 @@ ErlMPC.init = function(x) {
         ErlMPC.ws.onclose = ErlMPC.onclose;
         ErlMPC.ws.onmessage = ErlMPC.onmessage;
         ErlMPC.ws.onerror = ErlMPC.onerror;
+
+        ErlMPC.h.ChangeAfterSomeTime = function(obj, name) {
+            obj.change(function() {
+                if (obj.data('t') != undefined)
+                    clearTimeout(obj.data('t'));
+                var Val = "{ \"" + name + "\" : " + this.value + "}";
+                obj.data("t", setTimeout(function(){ErlMPC.ws.send(Val)},50));
+                })
+        },
+        ErlMPC.h.ChangeAfterSomeTime(ErlMPC.cache.seek, "seek");
+        ErlMPC.h.ChangeAfterSomeTime(ErlMPC.cache.setvol, "setvol");
     } else {
         alert("Your browser does not support websockets, sorry");
         return false;
