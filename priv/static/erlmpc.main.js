@@ -30,8 +30,8 @@ ErlMPC.init = function(x) {
         },
         ErlMPC.h.ChangeAfterSomeTime(ErlMPC.cache.seek, "seek");
         ErlMPC.h.ChangeAfterSomeTime(ErlMPC.cache.setvol, "setvol");
-        ErlMPC.cache.next.click(function() { ErlMPC.ws.send("{ \"next\": null }"); });
-        ErlMPC.cache.prev.click(function() { ErlMPC.ws.send("{ \"prev\": null }"); });
+        ErlMPC.cache.next.click(function() { ErlMPC.ws.send("{ \"next\": true }"); });
+        ErlMPC.cache.prev.click(function() { ErlMPC.ws.send("{ \"prev\": true }"); });
         ErlMPC.cache.pause.click(function() {
             var Val = { "pause" : !ErlMPC.cache.pause.data('paused') };
             ErlMPC.ws.send(JSON.stringify(Val));
@@ -58,7 +58,7 @@ ErlMPC.update_screen = function(data) {
 
 ErlMPC.onopen = function(evt) {
     // Ask for current song, volume and status
-    ErlMPC.ws.send("{ \"statuscurrentsong\": null }");
+    ErlMPC.ws.send("{ \"statuscurrentsong\": true }");
 };
 
 ErlMPC.onclose = function(evt) {
