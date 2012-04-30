@@ -23,3 +23,7 @@ TODO:
     * Get rid of gproc (too many dependencies, too less used)
     * Blog about PIQI
     * (Maybe) Add long polling fallback if websockets are unavailable
+
+Read the whole story of this player [here].
+
+[here]: http://m.jakstys.lt/tech/2012/04/erlmpc-and-the-awesomeness-of-piqi/
