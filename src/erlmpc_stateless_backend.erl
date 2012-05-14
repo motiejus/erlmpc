@@ -12,7 +12,7 @@
 %% 1) Find out what it wants
 %% 2) Do the action
 %% 3) If necessary, give response
--spec proc/2 :: (atom(), erlmpd:conn()) -> {reply, binary()} | noreply.
+-spec proc/2 :: (atom(), erlmpd:mpd_conn()) -> {reply, binary()} | noreply.
 proc(Req, Conn) ->
     case Req of
         currentsong ->
@@ -39,7 +39,7 @@ proc(Req, Conn) ->
 %% @doc process a request from client:
 %% 1) Depiqi it (convert to native type)
 %% 2) Pass to request processor
--spec proc_bin/2 :: (binary(), erlmpd:conn()) -> {reply, binary()} | noreply.
+-spec proc_bin/2 :: (binary(), erlmpd:mpd_conn()) -> {reply, binary()} | noreply.
 proc_bin(Msg, Conn) ->
     Req = erlmpc_piqi_ext:parse_request(Msg, 'json'),
     proc(Req, Conn).

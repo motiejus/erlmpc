@@ -12,7 +12,7 @@
 -export([websocket_init/3, websocket_handle/3,
         websocket_info/3, websocket_terminate/3]).
 
--record(state, { conn :: erlmpd:conn() }).
+-record(state, { conn :: erlmpd:mpd_conn() }).
 
 init({_Any, http}, Req, []) ->
     case cowboy_http_req:header('Upgrade', Req) of
