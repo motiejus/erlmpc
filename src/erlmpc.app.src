@@ -5,10 +5,7 @@
   {registered, []},
   {applications, [
                   kernel,
-                  stdlib,
-                  cowboy,
-                  piqi,
-                  gproc
+                  stdlib
                  ]},
   {mod, { erlmpc_app, []}},
   {env, []}

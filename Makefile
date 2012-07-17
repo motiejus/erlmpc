@@ -1,9 +1,11 @@
-.PHONY: start compile deps
+.PHONY: start compile
 
-run:
-	erl -pz $(PWD)/ebin -pz apps/*/ebin deps/*/ebin -s erlmpc_app
+compile: ebin
 
-compile:
+run: compile
+	erl -pz $(PWD)/ebin -pz deps/*/ebin -s erlmpc_app
+
+ebin: src deps
 	./rebar compile
 
 deps:
