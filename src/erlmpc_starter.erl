@@ -11,8 +11,10 @@ start_link() ->
     Dispatch = [
         % {Host, list({Path, Handler, Opts})}
         {'_', [
-                {[<<"static">>, '...'], cowboy_http_static,
-                    [{directory, {priv_dir, erlmpc, [<<"static">>]}}]},
+                {[<<"static">>, '...'], cowboy_http_static, [
+                        {directory, {priv_dir, erlmpc, [<<"static">>]}},
+                        {mimetypes, {fun mimetypes:path_to_mimes/2, default}}
+                    ]},
                 {'_', erlmpc_ws_handler, []}
             ]
         }

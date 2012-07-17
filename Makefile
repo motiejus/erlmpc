@@ -1,4 +1,4 @@
-.PHONY: start compile
+.PHONY: start compile deps
 
 compile:
 	./rebar compile
