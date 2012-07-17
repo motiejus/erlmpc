@@ -90,6 +90,15 @@ ErlMPC.stop_freq = function() {
     ErlMPC.timeout_handle = undefined;
 };
 
+ErlMPC.getPlaylist = function(){
+	console.log(ErlMPC.ws.send("{\"command\": \"playlist\"}"));
+	var list = JSON.parse(ErlMPC.ws.send("{\"command\": \"playlist\"}"));
+	$("#playlist").html("");
+	for(var i =0;i<list.length;i++){
+		$("#playlist").append(list[i]+"<br/>");
+	}
+};
+
 $(function() {
 	var iurl = document.location,
 	    url;
@@ -100,4 +109,5 @@ $(function() {
     	url = "ws:/" + iurl.href;
     }
     ErlMPC.init(url);
+   // ErlMPC.getPlaylist();
 });
