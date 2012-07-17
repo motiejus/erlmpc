@@ -32,6 +32,12 @@ proc(Req, Conn) ->
         {setvol, Vol} -> erlmpd:setvol(Conn, Vol), noreply;
         {pause, true} -> erlmpd:pause(Conn, true), noreply;
         {pause, false} -> erlmpd:play(Conn), noreply;
+        {command, C} ->
+            Ret = case erlmpd:command(Conn, C) of
+                {error, Err} -> {reply, Err};
+                X -> erlmpc_piqi_ext:gen_command_list(X, 'json')
+            end,
+            {reply, Ret};
         prev -> erlmpd:previous(Conn), noreply;
         next -> erlmpd:next(Conn), noreply
     end.

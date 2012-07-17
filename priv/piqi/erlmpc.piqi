@@ -8,6 +8,7 @@
     .option [ .name status ]
     .option [ .name currentsong ]
     .option [ .name statuscurrentsong ]
+    .option [ .name command .type string ]
 ]
 
 .record [
@@ -54,4 +55,9 @@
     .option [ .name play ]
     .option [ .name stop ]
     .option [ .name pause ]
+]
+
+.list [
+    .name command-list
+    .type string
 ]
