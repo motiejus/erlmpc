@@ -1,6 +1,6 @@
 ErlMPC = new Object();
 
-ErlMPC.init = function(x) {
+ErlMPC.init = function( serverUrl ) {
     if ("WebSocket" in window) {
         ErlMPC.cache = {
             "seek" : $("#seek"),
@@ -10,10 +10,10 @@ ErlMPC.init = function(x) {
             "next" : $("#next"),
             "prev" : $("#prev"),
             "error" : $("#error")
-        },
-        ErlMPC.h = {},
+        };
+        ErlMPC.h = {};
 
-        ErlMPC.h.wsUri = document.URL.replace(/^http:/, "ws:");
+        ErlMPC.h.wsUri = serverUrl;
         ErlMPC.ws = new WebSocket(ErlMPC.h.wsUri);
         ErlMPC.ws.onopen = ErlMPC.onopen;
         ErlMPC.ws.onclose = ErlMPC.onclose;
@@ -91,5 +91,13 @@ ErlMPC.stop_freq = function() {
 };
 
 $(function() {
-        ErlMPC.init();
+	var iurl = document.location,
+	    url;
+
+    if (iurl.hash) {
+    	url = "ws:/" + iurl.hash.substr(1);
+    } else {
+    	url = "ws:/" + iurl.href;
+    }
+    ErlMPC.init(url);
 });
