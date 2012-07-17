@@ -1,5 +1,52 @@
 ErlMPC = new Object();
 
+MpdPlayer = function() {
+    
+    }();
+
+
+Mpd = function () {
+
+    var connection;
+    var buffer = [];
+
+    function message(e) {
+        console.log("received: ",e);
+        buffer.push(e.data);
+        return e.data
+    };
+
+    function onopen(e) {
+        console.log("Connected!");
+    }
+    function onclose(e) {
+        console.log("Disconnected", e);
+    }
+
+    function sendSafeMessage(message) {
+        connection.send(message);
+    }
+
+    return {
+        connect: function( url ) {
+            connection = new WebSocket('ws:/' + url);
+            connection.onmessage = message;
+            connection.onerror  = onclose;
+            connection.onopen  = onopen;
+            connection.msg  = sendSafeMessage;
+        },
+
+        message : function(message) {
+            connection.msg(message);
+        },
+
+        getBuffer: function() {
+            return buffer;
+        }
+
+    }
+}();
+
 ErlMPC.init = function( serverUrl ) {
     if ("WebSocket" in window) {
         ErlMPC.cache = {
@@ -15,6 +62,7 @@ ErlMPC.init = function( serverUrl ) {
 
         ErlMPC.h.wsUri = serverUrl;
         ErlMPC.ws = new WebSocket(ErlMPC.h.wsUri);
+        //ErlMPC.ws = new WebSocket(ErlMPC.h.wsUri);
         ErlMPC.ws.onopen = ErlMPC.onopen;
         ErlMPC.ws.onclose = ErlMPC.onclose;
         ErlMPC.ws.onmessage = ErlMPC.onmessage;
@@ -100,14 +148,16 @@ ErlMPC.getPlaylist = function(){
 };
 
 $(function() {
-	var iurl = document.location,
-	    url;
+    var iurl = document.location, 
+        url;
 
-    if (iurl.hash) {
-    	url = "ws:/" + iurl.hash.substr(1);
+    if(iurl.hash){
+        url = "ws:/" + iurl.hash.substr(1);
     } else {
-    	url = "ws:/" + iurl.href;
+        url = document.URL.replace(/^http/, "ws:");
+        //url = "ws:/" + iurl.href;
     }
+
     ErlMPC.init(url);
    // ErlMPC.getPlaylist();
 });
