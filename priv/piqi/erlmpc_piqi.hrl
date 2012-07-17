@@ -10,6 +10,7 @@
     | status
     | currentsong
     | statuscurrentsong
+    | {command, string() | binary()}
 ).
 -record(erlmpc_currentsong, {
     file :: string() | binary(),
@@ -48,6 +49,7 @@
     | stop
     | pause
 ).
+-type(erlmpc_command_list() :: [string() | binary()]).
 
 -type(erlmpc_currentsong() :: #erlmpc_currentsong{}).
 -type(erlmpc_status() :: #erlmpc_status{}).
